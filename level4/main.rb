@@ -39,18 +39,14 @@ def calcul
         @workers_data.each { |v| v["count"] = 0 }
         @shifts_data.each { |v| v["day"] = "" ; d = DateTime.parse(v['start_date']) ; v["day"]= d.strftime('%A') }
         @workers_data.each { |v|  if v["status"] == "medic" then v["price_per_shift"] = 270  elsif v["status"] == "interne" then v["price_per_shift"] = 126 elsif v["status"] == "interim" then v["price_per_shift"] = 480  end }
-        @shifts_data.each { |shift|  add= @workers_data.detect {|f| f["id"] == shift["user_id"] } ; add["count"] += 1 ; if shift['day'] == "Saturday" || shift['day'] == "Sunday" then add["count"] += 1 end  ; }
+        @shifts_data.each { |shift|  add= @workers_data.detect {|f| f["id"] == shift["user_id"] } ; add["count"] += 1; if shift['day'] == "Saturday" || shift['day'] == "Sunday" then add["count"] += 1 end  ; }
         i+=1
         @workers_output[i-1] = {id: @workers_data[i-1]["id"], price: @workers_data[i-1]["price_per_shift"] * @workers_data[i-1]["count"]}
     break if i>= @workers_data.length - @nb_error
     end 
+@shifts_data.each { |shift|  add= @workers_data.detect {|f| f["id"] == shift["user_id"] }; if add["status"] == "interim" then @nb_interim += 1 end }
 end
 def export
-        @workers_data.each do |workers_data|
-            if workers_data['status'] == "interim" then  @nb_interim += workers_data['count']end
-        end 
-        
-        
         @commition = 0
         @workers_output.each_value do |v|
             val_com = v[:price].to_f
