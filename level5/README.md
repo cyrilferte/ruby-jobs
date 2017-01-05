@@ -8,3 +8,5 @@ We are expecting a link to a hosted Rails application that enable us to:
 - consult shifts
 
 The application should be as simple as possible (for example, authentication is not expected).
+[App link](http://honestica-level5-cyril.herokuapp.com/)
+[Git Link](https://github.com/cyrilferte/honestica_level5)
